@@ -29,7 +29,7 @@ c : char = #0;
 
 // This is the final operation we want to do. It can be changed by making it to
 // point to another function with the same signature
-math_operation: function(op1, op2 : Single) : Single;
+math_operation: function(op1, op2 : Single) : Single = nil;
 
 // Just a helper message
 procedure wrong_arguments_number();
@@ -74,6 +74,12 @@ begin
         operant_1 := StrToFloat(paramstr(optind));
         inc(optind);
         operant_2 := StrToFloat(paramstr(optind));
+
+        if math_operation = nil then
+        begin
+            writeln('No operation selected.');
+            halt(1);
+        end;
 
         // Print the result and finish the program
         writeln('The result is : ', math_operation(operant_1, operant_2):6:2);

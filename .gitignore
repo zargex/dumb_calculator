@@ -1,0 +1,4 @@
+# ignore everything except the .md and the main pascal file
+*
+!dumb_calculator.pas
+!*.md
