@@ -36,7 +36,7 @@ procedure wrong_arguments_number();
 begin
     writeln('needs exactly 2 numbers.');
     writeln('Try again.');
-    ExitCode := 1;
+    halt(1);
 end;
 
 // The definition of the addition operation
