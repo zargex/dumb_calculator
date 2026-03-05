@@ -9,8 +9,8 @@ getopts, SysUtils;
 
 var 
 // These will be the 2 numbers we want to work with
-operant_1 : Float;
-operant_2 : Float;
+operant_1 : Single;
+operant_2 : Single;
 
 // Dynamic array of long options 
 options : array of TOption = (
@@ -29,7 +29,7 @@ c : char = #0;
 
 // This is the final operation we want to do. It can be changed by making it to
 // point to another function with the same signature
-math_operation: function(op1, op2 : Float) : Float;
+math_operation: function(op1, op2 : Single) : Single;
 
 // Just a helper message
 procedure wrong_arguments_number();
@@ -40,7 +40,7 @@ begin
 end;
 
 // The definition of the addition operation
-function addition(op1, op2 : Float) : Float;
+function addition(op1, op2 : Single) : Single;
 begin
     addition := op1 + op2
 end;
@@ -76,7 +76,7 @@ begin
         operant_2 := StrToFloat(paramstr(optind));
 
         // Print the result and finish the program
-        writeln('The result is : ', math_operation(operant_1, operant_2));
+        writeln('The result is : ', math_operation(operant_1, operant_2):6:2);
         ExitCode := 0;
     end
     else
