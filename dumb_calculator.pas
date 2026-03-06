@@ -17,7 +17,23 @@ options : array of TOption = (
     (Name: 'add';   // The option will be --add
     has_arg:  0;    // 0 :it has no args, 1: it has and 2: it has optionals args
     flag: nil;      // pointer to will store the value 
-    value: 'a')     // value returned by getlongopts or set into flag
+    value: 'a'),    // value returned by getlongopts or set into flag
+    (Name: 'sub';
+    has_arg:  0;
+    flag: nil;
+    value: 's'),
+    (Name: 'mul';
+    has_arg:  0;
+    flag: nil;
+    value: 'm'),
+    (Name: 'div';
+    has_arg:  0;
+    flag: nil;
+    value: 'd'),
+    (Name: 'help';
+    has_arg:  0;
+    flag: nil;
+    value: 'h')
     );
 
 // This index is used by getlongopts() to tell use the index of the option
@@ -39,20 +55,52 @@ begin
     halt(1);
 end;
 
-// The definition of the addition operation
+procedure help_message();
+begin
+    writeln('dumb_calculator is a simple calculator');
+    writeln('How to use: dump_calculator OP arg1 arg2');
+    writeln('where OP is one of the following option and arg1 and arg2 are numbers');
+    writeln('Options:');
+    writeln('--add | -a : Addition');
+    writeln('--sub | -s : Subtraction');
+    writeln('--mul | -m : Multiplication');
+    writeln('--div | -d : Division');
+    halt(0);
+end;
+
+// Definitions of the operations
 function addition(op1, op2 : Single) : Single;
 begin
     addition := op1 + op2
 end;
 
+function subtraction(op1, op2 : Single) : Single;
+begin
+    subtraction := op1 - op2
+end;
+
+function multiplication(op1, op2 : Single) : Single;
+begin
+    multiplication := op1 * op2
+end;
+
+function division(op1, op2 : Single) : Single;
+begin
+    division := op1 / op2
+end;
+
 begin
     // loop to process all the options
     repeat
-        c := getlongopts('a',@options[0],option_index);
+        c := getlongopts('asmdh',@options[0],option_index);
         // getlongopts returns a char representing the option it found.
         // Or '?' in case an unknown option
         case c of
             'a': math_operation := @addition;
+            's': math_operation := @subtraction;
+            'm': math_operation := @multiplication;
+            'd': math_operation := @division;
+            'h': help_message();
             '?': writeln('Error with option: ', optopt);
         end;
     until c = endofoptions;
